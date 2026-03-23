@@ -10,16 +10,16 @@
 <meta name="author" content="Ahnaf Tahsin">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#c9a84c">
-<link rel="canonical" href="https://khatir.web.app/">
+<link rel="canonical" href="https://khatir.ahnaf.pro.bd/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Khatir">
 <meta property="og:title" content="Khatir — Private Messaging for Curated Communities">
 <meta property="og:description" content="A private, invite-only messaging platform. Connect with verified people and chat securely.">
-<meta property="og:url" content="https://khatir.web.app/">
+<meta property="og:url" content="https://khatir.ahnaf.pro.bd/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Khatir — Private Messaging">
 <meta name="twitter:description" content="Private, invite-only messaging for curated communities.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Khatir","url":"https://khatir.web.app/","description":"Private invite-only messaging platform","applicationCategory":"CommunicationApplication","author":{"@type":"Person","name":"Ahnaf Tahsin"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Khatir","url":"https://khatir.ahnaf.pro.bd/","description":"Private invite-only messaging platform","applicationCategory":"CommunicationApplication","author":{"@type":"Person","name":"Ahnaf Tahsin"}}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f1318'/><text y='.9em' font-size='68' x='50%' text-anchor='middle' dominant-baseline='hanging' fill='%23c9a84c' font-family='Georgia'>ক</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -593,6 +593,7 @@ let CONVOS      = {};
 let ACTIVE      = null;
 let unsubMsg    = null;
 let unsubCon    = null;
+let myDocUnsub  = null;
 let selEmoji    = null;
 let selColor    = null;
 
@@ -628,12 +629,47 @@ auth.onAuthStateChanged(async user => {
   MY_DOC   = snap.data();
   IS_ADMIN = (user.email === ADMIN_EMAIL);
 
+  // Auto-verify Admin if not already set correctly
+  if (IS_ADMIN && (!MY_DOC.verified || MY_DOC.verifyStatus !== 'approved' || MY_DOC.status !== 'approved')) {
+    await db.collection('users').doc(user.uid).update({
+      verified: true,
+      verifyStatus: 'approved',
+      status: 'approved'
+    });
+    MY_DOC.verified = true;
+    MY_DOC.verifyStatus = 'approved';
+    MY_DOC.status = 'approved';
+  }
+
   if (!IS_ADMIN && MY_DOC.status === 'rejected') {
     hideLoader();
     toast('Your Khatir access has been rejected.', 'e');
     await auth.signOut();
     return;
   }
+  
+  // Real-time listener for MY_DOC to instantly catch Admin Approval/Verification changes
+  myDocUnsub = db.collection('users').doc(user.uid).onSnapshot(doc => {
+    if (doc.exists) {
+      MY_DOC = doc.data();
+      initChatUI(); 
+
+      // If they were on the pending screen and got approved, move them into chat
+      if (!IS_ADMIN && MY_DOC.status === 'approved') {
+        const pScreen = G('pending-screen');
+        if (pScreen && !pScreen.classList.contains('hidden')) {
+          showScreen('chat');
+        }
+      }
+      
+      // If admin revokes access while they are logged in
+      if (!IS_ADMIN && MY_DOC.status === 'rejected') {
+        toast('Your Khatir access has been revoked.', 'e');
+        doLogout();
+      }
+    }
+  });
+
   if (!IS_ADMIN && MY_DOC.status !== 'approved') {
     hideLoader();
     showScreen('pending');
@@ -705,7 +741,7 @@ async function doLogin() {
 }
 
 /* ══════════════════════════════════════
-   REGISTER  — Updated logic to fix permissions
+   REGISTER
 ══════════════════════════════════════ */
 async function doReg() {
   clearAuthMsg();
@@ -723,26 +759,22 @@ async function doReg() {
   REGISTERING = true;  
 
   try {
-    // 1. Create Firebase Auth account FIRST so we have auth privileges
     const cred    = await auth.createUserWithEmailAndPassword(em, pw);
     const uid     = cred.user.uid;
     const isAdmin = (em === ADMIN_EMAIL);
 
-    // 2. Force-refresh the auth token
     await cred.user.getIdToken(true);
     await sleep(500);  
 
-    // 3. Now check username is unique (since we are authenticated)
     const ucheck = await db.collection('users').where('username', '==', un).limit(1).get();
     if (!ucheck.empty) {
-      await cred.user.delete(); // Rollback if username is taken
+      await cred.user.delete();
       showAuthMsg('Username already taken. Please choose another.', 'err');
       setL('btn-reg', false);
       REGISTERING = false;
       return;
     }
 
-    // 4. Write the Firestore user document
     const initials = nm.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase().slice(0, 2);
     await db.collection('users').doc(uid).set({
       uid,
@@ -793,8 +825,9 @@ async function doLogout() {
   if (ME) {
     db.collection('users').doc(ME.uid).update({ online: false }).catch(() => {});
   }
-  if (unsubCon) { unsubCon(); unsubCon = null; }
-  if (unsubMsg) { unsubMsg(); unsubMsg = null; }
+  if (myDocUnsub) { myDocUnsub(); myDocUnsub = null; }
+  if (unsubCon)   { unsubCon(); unsubCon = null; }
+  if (unsubMsg)   { unsubMsg(); unsubMsg = null; }
   ME = null; MY_DOC = null; IS_ADMIN = false;
   CONVOS = {}; ACTIVE = null;
   await auth.signOut();
@@ -1185,6 +1218,17 @@ function openVerify() {
 }
 
 async function submitVfy() {
+  // Ensure the checklist is truly complete before pushing verification request
+  const criteriaChecks = [
+    MY_DOC.status === 'approved',
+    !!(MY_DOC.name && MY_DOC.name.trim().split(' ').length >= 2),
+    !!(MY_DOC.bio && MY_DOC.bio.trim()),
+    !!(MY_DOC.photoUrl || MY_DOC.avatarEmoji)
+  ];
+  if (!criteriaChecks.every(Boolean)) {
+    return showMsg('vfy-msg', 'Please meet all eligibility checklist criteria above before applying.', 'err');
+  }
+
   const reason = G('vfy-reason').value.trim();
   const cat    = G('vfy-cat').value;
   if (!reason) return showMsg('vfy-msg', 'Please describe why you should be verified.', 'err');
