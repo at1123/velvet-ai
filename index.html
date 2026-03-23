@@ -314,14 +314,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 </head>
 <body>
 
-<!-- LOADER -->
 <div id="app-loader">
   <div class="L">✦ KHATIR</div>
   <div class="T">Private Messaging</div>
   <div class="SP"></div>
 </div>
 
-<!-- AUTH -->
 <div id="auth-screen" class="hidden">
   <div class="acard">
     <h1 class="alogo">✦ KHATIR</h1>
@@ -332,7 +330,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     </div>
     <div id="auth-msg" class="mbox hidden" role="alert" aria-live="polite"></div>
 
-    <!-- LOGIN -->
     <div id="f-li">
       <div class="field">
         <label for="l-em">Email</label>
@@ -345,7 +342,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <button class="btn btn-gold" id="btn-li" onclick="doLogin()">Sign In to Khatir</button>
     </div>
 
-    <!-- REGISTER -->
     <div id="f-reg" class="hidden">
       <div class="field">
         <label for="r-nm">Full Name</label>
@@ -369,7 +365,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- PENDING -->
 <div id="pending-screen" class="hidden">
   <div class="pcard">
     <div class="picon">⏳</div>
@@ -379,7 +374,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- ADMIN -->
 <div id="admin-screen" class="hidden">
   <div class="admin-nav">
     <h1>✦ Khatir Admin</h1>
@@ -404,7 +398,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- CHAT -->
 <div id="chat-screen" class="hidden">
   <header class="topnav">
     <div class="nlogo">✦ KHATIR <span class="nlogo-dot"></span></div>
@@ -471,7 +464,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- PROFILE MODAL -->
 <div class="overlay hidden" id="prof-ov" onclick="closeProfIf(event)" role="dialog" aria-modal="true">
   <div class="modal">
     <button class="mc" onclick="closeProf()">✕</button>
@@ -509,7 +501,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- VERIFY MODAL -->
 <div class="overlay hidden" id="vfy-ov" onclick="closeVfyIf(event)" role="dialog" aria-modal="true">
   <div class="modal">
     <button class="mc" onclick="closeVfy()">✕</button>
@@ -575,7 +566,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <div class="toasts" id="toasts"></div>
 
-<!-- FIREBASE SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -598,7 +588,7 @@ const COLORS = ['#c9a84c','#3b9eff','#e74c3c','#2ecc71','#9b59b6','#e67e22','#1a
 let ME          = null;
 let MY_DOC      = null;
 let IS_ADMIN    = false;
-let REGISTERING = false;  // prevents auth listener firing mid-registration
+let REGISTERING = false;  
 let CONVOS      = {};
 let ACTIVE      = null;
 let unsubMsg    = null;
@@ -610,7 +600,7 @@ let selColor    = null;
    AUTH STATE LISTENER
 ══════════════════════════════════════ */
 auth.onAuthStateChanged(async user => {
-  if (REGISTERING) return;  // skip during registration to avoid race condition
+  if (REGISTERING) return;  
 
   if (!user) {
     hideLoader();
@@ -620,7 +610,6 @@ auth.onAuthStateChanged(async user => {
 
   ME = user;
 
-  // Retry fetching user doc in case write hasn't completed yet
   let snap  = await db.collection('users').doc(user.uid).get();
   let tries = 0;
   while (!snap.exists && tries < 10) {
@@ -651,7 +640,6 @@ auth.onAuthStateChanged(async user => {
     return;
   }
 
-  // Mark online
   db.collection('users').doc(ME.uid)
     .update({ online: true, lastSeen: FS.serverTimestamp() })
     .catch(() => {});
@@ -710,7 +698,6 @@ async function doLogin() {
   setL('btn-li', true);
   try {
     await auth.signInWithEmailAndPassword(em, pw);
-    // onAuthStateChanged handles routing
   } catch (e) {
     showAuthMsg(fmtErr(e.code) || e.message, 'err');
     setL('btn-li', false);
@@ -718,12 +705,7 @@ async function doLogin() {
 }
 
 /* ══════════════════════════════════════
-   REGISTER  — fully fixed
-   Fix 1: REGISTERING flag prevents race
-   Fix 2: getIdToken(true) forces fresh
-          auth token before Firestore write
-   Fix 3: sleep(500) lets token propagate
-   Fix 4: finally block always clears flag
+   REGISTER  — Updated logic to fix permissions
 ══════════════════════════════════════ */
 async function doReg() {
   clearAuthMsg();
@@ -738,26 +720,27 @@ async function doReg() {
   if (pw.length < 6)             return showAuthMsg('Password must be at least 6 characters.', 'err');
 
   setL('btn-reg', true);
-  REGISTERING = true;  // block auth listener
+  REGISTERING = true;  
 
   try {
-    // 1. Check username is unique
+    // 1. Create Firebase Auth account FIRST so we have auth privileges
+    const cred    = await auth.createUserWithEmailAndPassword(em, pw);
+    const uid     = cred.user.uid;
+    const isAdmin = (em === ADMIN_EMAIL);
+
+    // 2. Force-refresh the auth token
+    await cred.user.getIdToken(true);
+    await sleep(500);  
+
+    // 3. Now check username is unique (since we are authenticated)
     const ucheck = await db.collection('users').where('username', '==', un).limit(1).get();
     if (!ucheck.empty) {
+      await cred.user.delete(); // Rollback if username is taken
       showAuthMsg('Username already taken. Please choose another.', 'err');
       setL('btn-reg', false);
       REGISTERING = false;
       return;
     }
-
-    // 2. Create Firebase Auth account
-    const cred    = await auth.createUserWithEmailAndPassword(em, pw);
-    const uid     = cred.user.uid;
-    const isAdmin = (em === ADMIN_EMAIL);
-
-    // 3. Force-refresh the auth token so Firestore sees request.auth != null
-    await cred.user.getIdToken(true);
-    await sleep(500);  // small buffer for token propagation
 
     // 4. Write the Firestore user document
     const initials = nm.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -782,7 +765,6 @@ async function doReg() {
     });
 
     if (!isAdmin) {
-      // Sign them out — they need admin approval first
       await auth.signOut();
       ['r-nm', 'r-un', 'r-em', 'r-pw'].forEach(id => {
         const inp = G(id);
@@ -791,11 +773,8 @@ async function doReg() {
       showAuthMsg('✓ Account created! Awaiting admin approval.', 'ok');
       setL('btn-reg', false);
     }
-    // If admin: flag clears in finally, then onAuthStateChanged handles routing
-
   } catch (e) {
     console.error('Registration error:', e);
-    // Try to clean up orphaned auth user if Firestore write failed
     try {
       const cu = auth.currentUser;
       if (cu && cu.uid && !MY_DOC) await cu.delete();
@@ -803,7 +782,7 @@ async function doReg() {
     showAuthMsg(fmtErr(e.code) || e.message, 'err');
     setL('btn-reg', false);
   } finally {
-    REGISTERING = false;  // always release — even on error
+    REGISTERING = false;  
   }
 }
 
@@ -1053,7 +1032,6 @@ function openProfile() {
     (d.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
   G('pun-disp').textContent = '@' + (d.username || '');
 
-  // Bio display
   const bioEl = G('pbio-disp');
   if (d.bio && d.bio.trim()) {
     bioEl.textContent = d.bio;
@@ -1063,7 +1041,6 @@ function openProfile() {
     bioEl.classList.add('hidden');
   }
 
-  // Honors
   const hon = G('phon');
   hon.innerHTML = '';
   if (d.email === ADMIN_EMAIL) hon.innerHTML += bdHonor();
@@ -1071,19 +1048,16 @@ function openProfile() {
     hon.innerHTML += '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.25);border-radius:20px;padding:2px 8px;font-size:.69rem;color:#f0a500">⏳ Verify pending</span>';
   }
 
-  // Pre-fill edit fields from MY_DOC
   G('pe-name').value = d.name || '';
-  G('pe-bio').value  = d.bio  || '';  // bio fix: always load fresh from MY_DOC
+  G('pe-bio').value  = d.bio  || '';  
 
   selEmoji = d.avatarEmoji || null;
   selColor = d.avatarColor || null;
 
-  // Emoji grid
   G('av-grid').innerHTML = EMOJIS.map(e =>
     `<div class="av-opt ${e === selEmoji ? 'sel' : ''}" onclick="pickEmoji(this,'${e}')">${e}</div>`
   ).join('');
 
-  // Color row
   G('col-row').innerHTML = COLORS.map(c =>
     `<div class="col-opt ${c === selColor ? 'sel' : ''}" style="background:${c}" onclick="pickColor(this,'${c}')"></div>`
   ).join('');
@@ -1122,13 +1096,13 @@ async function promptPhoto() {
 }
 
 /* ══════════════════════════════════════
-   SAVE PROFILE — bio fix applied
+   SAVE PROFILE
 ══════════════════════════════════════ */
 async function saveProfile() {
   const nameEl = G('pe-name');
   const bioEl  = G('pe-bio');
   const name   = nameEl.value.trim();
-  const bio    = bioEl.value.trim();  // read directly — not through gv()
+  const bio    = bioEl.value.trim();  
 
   if (!name) {
     showMsg('pe-msg', 'Name cannot be empty.', 'err');
@@ -1150,19 +1124,14 @@ async function saveProfile() {
   try {
     await db.collection('users').doc(ME.uid).update(updates);
 
-    // Update local state immediately
     Object.assign(MY_DOC, updates);
-
-    // Refresh nav bar
     initChatUI();
 
-    // Refresh profile modal hero
     setAv(G('pav-big'), MY_DOC);
     G('pname-disp').innerHTML = esc(name) + ' ' +
       (MY_DOC.verified ? vbadge('lg') : '') +
       (MY_DOC.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
 
-    // Refresh bio display
     const bioDisp = G('pbio-disp');
     if (bio) {
       bioDisp.textContent = bio;
