@@ -25,7 +25,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<!-- ══ FIREBASE CONFIG ══ -->
 <script>
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCn1FQYuPg4nQ8XDJQ9-u7BH5Ko-vnreao",
@@ -39,16 +38,15 @@ const ADMIN_EMAIL = "ahnaftahsin99@gmail.com";
 </script>
 
 <style>
-/* ══ RESET & VARS ══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#080b0f; --s1:#0f1318; --s2:#151b23; --s3:#1c2330;
-  --b1:#1e2838; --b2:#283550;
-  --gold:#c9a84c; --gold2:#e8c76d; --gd:rgba(201,168,76,.1); --gg:rgba(201,168,76,.28);
-  --text:#e8e4db; --t2:#8a8f9a; --t3:#4a5260;
-  --danger:#c0392b; --ok:#1a9e5c; --online:#2ecc71;
-  --blue:#3b9eff; --bd:rgba(59,158,255,.12);
-  --bme:linear-gradient(135deg,#c9a84c,#e8c76d); --bthem:#141a25;
+  --bg:#080b0f;--s1:#0f1318;--s2:#151b23;--s3:#1c2330;
+  --b1:#1e2838;--b2:#283550;
+  --gold:#c9a84c;--gold2:#e8c76d;--gd:rgba(201,168,76,.1);--gg:rgba(201,168,76,.28);
+  --text:#e8e4db;--t2:#8a8f9a;--t3:#4a5260;
+  --danger:#c0392b;--ok:#1a9e5c;--online:#2ecc71;
+  --blue:#3b9eff;--bd:rgba(59,158,255,.12);
+  --bme:linear-gradient(135deg,#c9a84c,#e8c76d);--bthem:#141a25;
   --sh:0 12px 50px rgba(0,0,0,.7);
   --fd:'Cormorant Garamond',Georgia,serif;
   --fu:'DM Sans',system-ui,sans-serif;
@@ -60,14 +58,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 ::-webkit-scrollbar-thumb{background:var(--b2);border-radius:4px}
 .hidden{display:none!important}
 
-/* ══ LOADER ══ */
+/* LOADER */
 #app-loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px;transition:opacity .5s}
 #app-loader .L{font-family:var(--fd);font-size:2.8rem;color:var(--gold);letter-spacing:.15em}
 #app-loader .T{font-size:.72rem;color:var(--t3);letter-spacing:.14em;text-transform:uppercase}
 #app-loader .SP{width:28px;height:28px;border:2px solid var(--b2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ══ AUTH ══ */
+/* AUTH */
 #auth-screen{height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(201,168,76,.06),transparent);position:relative;overflow:hidden}
 #auth-screen::before{content:'KHATIR';position:absolute;font-family:var(--fd);font-size:20vw;font-weight:300;color:rgba(201,168,76,.025);letter-spacing:.2em;user-select:none;pointer-events:none;top:50%;left:50%;transform:translate(-50%,-50%)}
 .acard{background:var(--s1);border:1px solid var(--b1);border-radius:20px;padding:44px 40px;width:min(440px,95vw);position:relative;z-index:1;box-shadow:var(--sh);animation:fup .4s ease;max-height:95vh;overflow-y:auto}
@@ -79,39 +77,27 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .tab.on{color:var(--gold);border-bottom-color:var(--gold)}
 .tab:hover:not(.on){color:var(--text)}
 
-/* ══ FORM ══ */
+/* FORM */
 .field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .field label{font-size:.71rem;font-weight:500;color:var(--t2);letter-spacing:.07em;text-transform:uppercase}
-.field input,.field textarea,.field select{
-  background:var(--s2);border:1px solid var(--b1);border-radius:9px;
-  padding:10px 13px;color:var(--text);font-family:var(--fu);font-size:.9rem;
-  outline:none;transition:var(--tr);width:100%
-}
+.field input,.field textarea,.field select{background:var(--s2);border:1px solid var(--b1);border-radius:9px;padding:10px 13px;color:var(--text);font-family:var(--fu);font-size:.9rem;outline:none;transition:var(--tr);width:100%}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gd)}
 .field input::placeholder,.field textarea::placeholder{color:var(--t3)}
 .field .hint{font-size:.69rem;color:var(--t3);margin-top:2px}
 .field textarea{resize:vertical;min-height:64px;line-height:1.5}
 .field select option{background:var(--s2);color:var(--text)}
-
 .btn{width:100%;padding:11px;border:none;border-radius:9px;cursor:pointer;font-family:var(--fu);font-size:.9rem;font-weight:600;transition:var(--tr);letter-spacing:.03em}
 .btn-gold{background:linear-gradient(135deg,#c9a84c,#e8c76d);color:#080b0f}
 .btn-gold:hover{transform:translateY(-1px);box-shadow:0 5px 18px var(--gg)}
 .btn-gold:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-ghost{background:transparent;border:1px solid var(--b2);color:var(--t2)}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 .btn-blue{background:var(--bd);color:var(--blue);border:1px solid rgba(59,158,255,.28)}
 .btn-blue:hover{background:var(--blue);color:#fff}
 .btn-blue:disabled{opacity:.45;cursor:not-allowed}
-.btn-ok{background:rgba(26,158,92,.15);color:#5dba8a;border:1px solid rgba(26,158,92,.25)}
-.btn-ok:hover{background:var(--ok);color:#fff}
-.btn-danger{background:rgba(192,57,43,.12);color:#e07070;border:1px solid rgba(192,57,43,.25)}
-.btn-danger:hover{background:var(--danger);color:#fff}
-
 .mbox{border-radius:8px;padding:9px 13px;font-size:.8rem;margin-bottom:12px;line-height:1.5}
 .mbox.err{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.22);color:#e07070}
 .mbox.ok{background:rgba(26,158,92,.1);border:1px solid rgba(26,158,92,.22);color:#5dba8a}
 
-/* ══ PENDING ══ */
+/* PENDING */
 #pending-screen{height:100vh;display:flex;align-items:center;justify-content:center}
 .pcard{background:var(--s1);border:1px solid var(--b1);border-radius:20px;padding:52px 40px;text-align:center;max-width:420px;width:95vw;animation:fup .4s ease}
 .picon{font-size:2.8rem;margin-bottom:14px;animation:pulse 2s ease-in-out infinite}
@@ -121,7 +107,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .pout{color:var(--t3);font-size:.78rem;cursor:pointer;text-decoration:underline}
 .pout:hover{color:var(--gold)}
 
-/* ══ LAYOUT ══ */
+/* LAYOUT */
 #chat-screen{height:100vh;display:flex;flex-direction:column}
 .topnav{display:flex;align-items:center;padding:0 16px;height:56px;background:var(--s1);border-bottom:1px solid var(--b1);gap:10px;flex-shrink:0;z-index:50}
 .nlogo{font-family:var(--fd);font-size:1.5rem;color:var(--gold);letter-spacing:.1em;display:flex;align-items:center;gap:7px}
@@ -139,17 +125,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .ipill{height:28px;padding:0 12px;border-radius:14px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;font-family:var(--fu);font-size:.75rem;font-weight:600;transition:var(--tr)}
 .ipill:hover{background:var(--gd)}
 
-/* ══ BADGES ══ */
+/* BADGES */
 .vb{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;background:var(--blue);border-radius:50%;flex-shrink:0;vertical-align:middle}
 .vb svg{width:8px;height:8px}
 .vb.lg{width:17px;height:17px}
 .vb.lg svg{width:10px;height:10px}
 .bdh{display:inline-flex;align-items:center;gap:4px;background:rgba(0,106,51,.12);border:1px solid rgba(0,106,51,.28);border-radius:20px;padding:2px 8px;font-size:.69rem;color:#4dbe85;font-weight:500;vertical-align:middle}
 
-/* ══ CHAT BODY ══ */
+/* CHAT BODY */
 .chat-body{display:flex;flex:1;overflow:hidden}
 
-/* ══ SIDEBAR ══ */
+/* SIDEBAR */
 .sidebar{width:285px;flex-shrink:0;display:flex;flex-direction:column;background:var(--s1);border-right:1px solid var(--b1)}
 .sb-head{padding:12px 12px 9px;border-bottom:1px solid var(--b1);flex-shrink:0}
 .sb-row{display:flex;align-items:center;gap:7px;margin-bottom:8px}
@@ -171,7 +157,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .acan{background:var(--s1);border:1px solid var(--b1)!important;color:var(--t2)}
 .conv-list{flex:1;overflow-y:auto;padding:5px}
 
-/* ══ CONV ITEM ══ */
+/* CONV ITEM */
 .ci{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:10px;cursor:pointer;transition:var(--tr)}
 .ci:hover{background:var(--s2)}
 .ci.active{background:var(--gd);border:1px solid rgba(201,168,76,.18)}
@@ -187,7 +173,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .empty-st{padding:28px;text-align:center;color:var(--t3);font-size:.8rem;line-height:1.8}
 .ei{font-size:1.8rem;opacity:.3;display:block;margin-bottom:8px}
 
-/* ══ CHAT MAIN ══ */
+/* CHAT MAIN */
 .chat-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .cwelcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:radial-gradient(ellipse at 50% 40%,rgba(201,168,76,.03),transparent)}
 .wart{font-family:var(--fd);font-size:3.5rem;opacity:.1;color:var(--gold)}
@@ -201,7 +187,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .chdr-st{font-size:.71rem;color:var(--t3)}
 .chdr-st.on{color:var(--online)}
 
-/* ══ MESSAGES ══ */
+/* MESSAGES */
 .msgs{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
 .ddiv{text-align:center;margin:14px 0 8px;position:relative}
 .ddiv::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--b1)}
@@ -224,7 +210,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .sbtn{width:40px;height:40px;border-radius:10px;border:none;flex-shrink:0;background:linear-gradient(135deg,#c9a84c,#e8c76d);color:#080b0f;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
 .sbtn:hover{transform:scale(1.06);box-shadow:0 3px 12px var(--gg)}
 
-/* ══ MODAL ══ */
+/* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.76);z-index:800;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);padding:12px}
 .modal{background:var(--s1);border:1px solid var(--b1);border-radius:18px;padding:30px 26px;width:min(460px,100%);position:relative;animation:fup .3s ease;max-height:92vh;overflow-y:auto}
 .mc{position:absolute;top:12px;right:12px;width:28px;height:28px;border:none;background:var(--s2);border-radius:7px;cursor:pointer;color:var(--t2);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
@@ -233,13 +219,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .divider{height:1px;background:var(--b1);margin:16px 0}
 .slabel{font-size:.71rem;font-weight:500;color:var(--t2);letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px;display:block}
 
-/* ══ PROFILE ══ */
+/* PROFILE */
 .prof-hero{display:flex;flex-direction:column;align-items:center;gap:9px;margin-bottom:18px}
 .pav-wrap{position:relative;width:74px;height:74px}
 .pav-big{width:74px;height:74px;border-radius:50%;background:var(--gd);border:2.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.9rem;color:var(--gold);overflow:hidden;background-size:cover;background-position:center}
 .pav-edit{position:absolute;bottom:0;right:0;width:22px;height:22px;background:var(--gold);border-radius:50%;border:2px solid var(--s1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.6rem;color:#080b0f;transition:var(--tr)}
 .pav-edit:hover{transform:scale(1.1)}
-.pname-disp{font-family:var(--fd);font-size:1.4rem;color:var(--text);display:flex;align-items:center;gap:6px;text-align:center}
+.pname-disp{font-family:var(--fd);font-size:1.4rem;color:var(--text);display:flex;align-items:center;gap:6px;text-align:center;flex-wrap:wrap;justify-content:center}
 .pun-disp{font-size:.82rem;color:var(--t2)}
 .pbio-disp{font-size:.82rem;color:var(--t2);text-align:center;max-width:320px;line-height:1.6;white-space:pre-wrap}
 .phon{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:3px}
@@ -252,7 +238,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .col-opt:hover{transform:scale(1.15)}
 .col-opt.sel{border-color:#fff;box-shadow:0 0 0 2px var(--b2)}
 
-/* ══ VERIFY ══ */
+/* VERIFY */
 .vpreview{width:56px;height:56px;background:var(--bd);border:2px solid var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin:0 auto 13px}
 .vcrit{display:flex;flex-direction:column;gap:5px;margin-bottom:15px}
 .vc{display:flex;align-items:center;gap:8px;font-size:.81rem;color:var(--t2);padding:7px 10px;background:var(--s2);border-radius:7px}
@@ -263,7 +249,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .vsbox.appr{background:rgba(59,158,255,.08);border:1px solid rgba(59,158,255,.2)}
 .vsbox.rejd{background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.2)}
 
-/* ══ ADMIN ══ */
+/* ADMIN */
 #admin-screen{height:100vh;display:flex;flex-direction:column;background:var(--bg)}
 .admin-nav{display:flex;align-items:center;gap:12px;padding:0 20px;height:56px;background:var(--s1);border-bottom:1px solid var(--b1)}
 .admin-nav h1{font-family:var(--fd);font-size:1.4rem;color:var(--gold);letter-spacing:.06em}
@@ -271,7 +257,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .atabs{display:flex;padding:0 20px;border-bottom:1px solid var(--b1);background:var(--s1)}
 .atab{padding:10px 18px;font-size:.81rem;font-weight:500;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:var(--tr)}
 .atab.on{color:var(--gold);border-bottom-color:var(--gold)}
-.atab.onv{color:var(--blue);border-bottom-color:var(--blue)}
+.atab.onv{color:var(--blue)!important;border-bottom-color:var(--blue)!important}
 .atab:hover:not(.on):not(.onv){color:var(--text)}
 .acnt{display:inline-flex;align-items:center;justify-content:center;background:var(--gd);color:var(--gold);border-radius:10px;padding:1px 6px;font-size:.68rem;font-weight:700;margin-left:5px;min-width:16px}
 .acnt.b{background:var(--bd);color:var(--blue)}
@@ -306,14 +292,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .sbadge.rejected{background:rgba(192,57,43,.08);color:#f87171;border:1px solid rgba(192,57,43,.18)}
 .empty-a{color:var(--t3);font-size:.8rem;padding:12px 0}
 
-/* ══ TOAST ══ */
+/* TOAST */
 .toasts{position:fixed;top:16px;right:16px;display:flex;flex-direction:column;gap:6px;z-index:9999;pointer-events:none}
 .toast{background:var(--s1);border:1px solid var(--b2);border-radius:10px;padding:10px 14px;font-size:.82rem;color:var(--text);min-width:210px;max-width:300px;box-shadow:var(--sh);animation:tin .2s ease;display:flex;align-items:center;gap:8px;pointer-events:all}
 .toast.s{border-left:3px solid var(--ok)}.toast.e{border-left:3px solid var(--danger)}.toast.i{border-left:3px solid var(--gold)}.toast.b{border-left:3px solid var(--blue)}
 @keyframes tin{from{opacity:0;transform:translateX(14px)}}
 @keyframes tout{to{opacity:0;transform:translateX(14px)}}
 
-/* ══ MOBILE ══ */
+/* MOBILE */
 .mob-back{display:none}
 @media(max-width:640px){
   .sidebar{width:100%;position:absolute;inset:56px 0 0 0;z-index:40;background:var(--s1)}
@@ -328,14 +314,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 </head>
 <body>
 
-<!-- ══ LOADER ══ -->
-<div id="app-loader" role="status" aria-label="Loading Khatir">
+<!-- LOADER -->
+<div id="app-loader">
   <div class="L">✦ KHATIR</div>
   <div class="T">Private Messaging</div>
   <div class="SP"></div>
 </div>
 
-<!-- ══ AUTH ══ -->
+<!-- AUTH -->
 <div id="auth-screen" class="hidden">
   <div class="acard">
     <h1 class="alogo">✦ KHATIR</h1>
@@ -383,7 +369,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- ══ PENDING ══ -->
+<!-- PENDING -->
 <div id="pending-screen" class="hidden">
   <div class="pcard">
     <div class="picon">⏳</div>
@@ -393,7 +379,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- ══ ADMIN ══ -->
+<!-- ADMIN -->
 <div id="admin-screen" class="hidden">
   <div class="admin-nav">
     <h1>✦ Khatir Admin</h1>
@@ -418,12 +404,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- ══ CHAT ══ -->
+<!-- CHAT -->
 <div id="chat-screen" class="hidden">
   <header class="topnav">
     <div class="nlogo">✦ KHATIR <span class="nlogo-dot"></span></div>
     <div class="nsp"></div>
-    <button class="ipill hidden" id="admin-btn" onclick="showScreen('admin')" aria-label="Admin panel">⚙ Admin</button>
+    <button class="ipill hidden" id="admin-btn" onclick="showScreen('admin')">⚙ Admin</button>
     <div class="npro" onclick="openProfile()" title="Edit profile" role="button" tabindex="0">
       <div class="nav-av" id="nav-av"></div>
       <div class="nav-info">
@@ -431,10 +417,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <div class="nav-un" id="nav-un"></div>
       </div>
     </div>
-    <button class="ibtn" onclick="doLogout()" title="Sign Out" aria-label="Sign out">🚪</button>
+    <button class="ibtn" onclick="doLogout()" title="Sign Out">🚪</button>
   </header>
   <div class="chat-body">
-    <nav class="sidebar" id="sidebar" aria-label="Conversations">
+    <nav class="sidebar" id="sidebar">
       <div class="sb-head">
         <div class="sb-row">
           <div class="sb-title">Messages</div>
@@ -442,7 +428,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         </div>
         <div class="sb-srch">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          <input type="search" id="srch-inp" placeholder="Search @username…" oninput="renderList(this.value)" aria-label="Search contacts">
+          <input type="search" id="srch-inp" placeholder="Search @username…" oninput="renderList(this.value)">
         </div>
       </div>
       <div class="add-panel hidden" id="add-panel">
@@ -453,7 +439,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <button class="acan" onclick="toggleAddP()">Cancel</button>
         </div>
       </div>
-      <div class="conv-list" id="conv-list" role="list"></div>
+      <div class="conv-list" id="conv-list"></div>
     </nav>
     <main class="chat-main">
       <div class="cwelcome" id="cwelcome">
@@ -463,18 +449,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </div>
       <div id="active-chat" class="hidden" style="display:flex;flex-direction:column;height:100%">
         <div class="chat-hdr">
-          <button class="ibtn mob-back" onclick="backToList()" aria-label="Back">←</button>
+          <button class="ibtn mob-back" onclick="backToList()">←</button>
           <div class="chdr-av" id="ch-av"></div>
           <div class="chdr-info">
             <div class="chdr-nm" id="ch-nm">User</div>
             <div class="chdr-un" id="ch-un"></div>
-            <div class="chdr-st" id="ch-st" aria-live="polite">Offline</div>
+            <div class="chdr-st" id="ch-st">Offline</div>
           </div>
         </div>
-        <div class="msgs" id="msgs" role="log" aria-live="polite"></div>
+        <div class="msgs" id="msgs"></div>
         <div class="iarea">
-          <textarea class="minp" id="minp" placeholder="Write a message…" rows="1" onkeydown="onKey(event)" oninput="autoH(this)" aria-label="Message input"></textarea>
-          <button class="sbtn" onclick="sendMsg()" aria-label="Send message">
+          <textarea class="minp" id="minp" placeholder="Write a message…" rows="1" onkeydown="onKey(event)" oninput="autoH(this)"></textarea>
+          <button class="sbtn" onclick="sendMsg()">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
             </svg>
@@ -485,26 +471,21 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- ══ PROFILE MODAL ══ -->
-<div class="overlay hidden" id="prof-ov" onclick="closeProfIf(event)" role="dialog" aria-modal="true" aria-label="Edit profile">
-  <div class="modal" id="prof-modal">
-    <button class="mc" onclick="closeProf()" aria-label="Close">✕</button>
-
-    <!-- Hero display -->
+<!-- PROFILE MODAL -->
+<div class="overlay hidden" id="prof-ov" onclick="closeProfIf(event)" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="mc" onclick="closeProf()">✕</button>
     <div class="prof-hero">
       <div class="pav-wrap">
         <div class="pav-big" id="pav-big"></div>
-        <div class="pav-edit" onclick="promptPhoto()" title="Change photo" role="button" tabindex="0">📷</div>
+        <div class="pav-edit" onclick="promptPhoto()" title="Change photo">📷</div>
       </div>
       <div class="pname-disp" id="pname-disp">Name</div>
       <div class="pun-disp" id="pun-disp">@username</div>
       <div class="pbio-disp hidden" id="pbio-disp"></div>
       <div class="phon" id="phon"></div>
     </div>
-
     <div class="divider"></div>
-
-    <!-- Edit form -->
     <span class="slabel">Edit Profile</span>
     <div class="field">
       <label for="pe-name">Display Name</label>
@@ -512,7 +493,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     </div>
     <div class="field">
       <label for="pe-bio">Bio</label>
-      <textarea id="pe-bio" rows="2" placeholder="Something about you…"></textarea>
+      <textarea id="pe-bio" rows="3" placeholder="Something about you…"></textarea>
     </div>
     <div class="field">
       <label>Avatar Emoji</label>
@@ -528,12 +509,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- ══ VERIFY MODAL ══ -->
+<!-- VERIFY MODAL -->
 <div class="overlay hidden" id="vfy-ov" onclick="closeVfyIf(event)" role="dialog" aria-modal="true">
   <div class="modal">
-    <button class="mc" onclick="closeVfy()" aria-label="Close">✕</button>
+    <button class="mc" onclick="closeVfy()">✕</button>
     <div class="mtitle">🔵 Khatir Verification</div>
-
     <div id="vs-none">
       <div style="text-align:center;margin-bottom:16px">
         <div class="vpreview">✓</div>
@@ -563,7 +543,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div id="vfy-msg" class="mbox hidden" role="alert"></div>
       <button class="btn btn-blue" id="btn-vfy" onclick="submitVfy()">Submit Application</button>
     </div>
-
     <div id="vs-pending" class="hidden">
       <div class="vsbox pend">
         <div style="font-size:2rem;margin-bottom:10px">⏳</div>
@@ -574,7 +553,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <span style="font-size:.77rem;color:var(--t3);cursor:pointer;text-decoration:underline" onclick="withdrawVfy()">Withdraw application</span>
       </div>
     </div>
-
     <div id="vs-approved" class="hidden">
       <div class="vsbox appr">
         <div style="font-size:2rem;margin-bottom:10px">🔵</div>
@@ -584,7 +562,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <p style="font-size:.83rem;color:var(--t2);line-height:1.7">Your blue badge is active and visible to all users.</p>
       </div>
     </div>
-
     <div id="vs-rejected" class="hidden">
       <div class="vsbox rejd">
         <div style="font-size:2rem;margin-bottom:10px">❌</div>
@@ -596,16 +573,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<div class="toasts" id="toasts" aria-live="assertive"></div>
+<div class="toasts" id="toasts"></div>
 
-<!-- ══ FIREBASE ══ -->
+<!-- FIREBASE SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 <script>
-/* ══════════════════════════════════════════
-   INIT
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   FIREBASE INIT
+══════════════════════════════════════ */
 firebase.initializeApp(FIREBASE_CONFIG);
 const auth = firebase.auth();
 const db   = firebase.firestore();
@@ -614,26 +592,25 @@ const FS   = firebase.firestore.FieldValue;
 const EMOJIS = ['😊','😎','🦁','🐯','🦊','🐺','🦅','🌙','⚡','🔥','💎','🌸','🎭','🎯','🚀','👑','🌊','🎸','🏔','🌺','🐉','🎪'];
 const COLORS = ['#c9a84c','#3b9eff','#e74c3c','#2ecc71','#9b59b6','#e67e22','#1abc9c','#e91e8c','#00bcd4','#ff5722','#607d8b','#f39c12'];
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    STATE
-══════════════════════════════════════════ */
-let ME         = null;
-let MY_DOC     = null;
-let IS_ADMIN   = false;
-let REGISTERING = false;   // ← FIX: prevents auth listener firing during registration
-let CONVOS     = {};
-let ACTIVE     = null;
-let unsubMsg   = null;
-let unsubCon   = null;
-let selEmoji   = null;
-let selColor   = null;
+══════════════════════════════════════ */
+let ME          = null;
+let MY_DOC      = null;
+let IS_ADMIN    = false;
+let REGISTERING = false;  // prevents auth listener firing mid-registration
+let CONVOS      = {};
+let ACTIVE      = null;
+let unsubMsg    = null;
+let unsubCon    = null;
+let selEmoji    = null;
+let selColor    = null;
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    AUTH STATE LISTENER
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 auth.onAuthStateChanged(async user => {
-  // ← FIX: skip if registration is in progress to avoid race condition
-  if (REGISTERING) return;
+  if (REGISTERING) return;  // skip during registration to avoid race condition
 
   if (!user) {
     hideLoader();
@@ -643,13 +620,13 @@ auth.onAuthStateChanged(async user => {
 
   ME = user;
 
-  // Retry fetching user doc (it may not exist yet on first login)
-  let snap = await db.collection('users').doc(user.uid).get();
-  let retry = 0;
-  while (!snap.exists && retry < 8) {
-    await sleep(700);
+  // Retry fetching user doc in case write hasn't completed yet
+  let snap  = await db.collection('users').doc(user.uid).get();
+  let tries = 0;
+  while (!snap.exists && tries < 10) {
+    await sleep(600);
     snap = await db.collection('users').doc(user.uid).get();
-    retry++;
+    tries++;
   }
 
   if (!snap.exists) {
@@ -662,10 +639,9 @@ auth.onAuthStateChanged(async user => {
   MY_DOC   = snap.data();
   IS_ADMIN = (user.email === ADMIN_EMAIL);
 
-  // Check account status
   if (!IS_ADMIN && MY_DOC.status === 'rejected') {
     hideLoader();
-    toast('Your Khatir access was rejected.', 'e');
+    toast('Your Khatir access has been rejected.', 'e');
     await auth.signOut();
     return;
   }
@@ -685,13 +661,12 @@ auth.onAuthStateChanged(async user => {
       .update({ online: false, lastSeen: FS.serverTimestamp() });
   });
 
-  // Setup UI
   initChatUI();
   listenConvos();
 
   if (IS_ADMIN) {
-    el('admin-btn').classList.remove('hidden');
-    el('add-btn').classList.remove('hidden');
+    G('admin-btn').classList.remove('hidden');
+    G('add-btn').classList.remove('hidden');
     listenAdmin();
   }
 
@@ -699,24 +674,26 @@ auth.onAuthStateChanged(async user => {
   showScreen('chat');
 });
 
-/* ══════════════════════════════════════════
-   INIT CHAT UI (nav bar)
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   INIT CHAT UI
+══════════════════════════════════════ */
 function initChatUI() {
   const d = MY_DOC;
-  setAv(el('nav-av'), d);
-  el('nav-nrow').innerHTML = esc(d.name || 'User') + ' ' + (d.verified ? vbadge() : '') + (d.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
-  el('nav-un').textContent = '@' + (d.username || '');
+  setAv(G('nav-av'), d);
+  G('nav-nrow').innerHTML = esc(d.name || 'User') + ' ' +
+    (d.verified ? vbadge() : '') +
+    (d.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
+  G('nav-un').textContent = '@' + (d.username || '');
 }
 
-/* ══════════════════════════════════════════
-   AUTH: TAB SWITCH
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   TAB SWITCH
+══════════════════════════════════════ */
 function swTab(t) {
-  el('f-li').classList.toggle('hidden', t !== 'li');
-  el('f-reg').classList.toggle('hidden', t !== 'reg');
-  el('t-li').classList.toggle('on', t === 'li');
-  el('t-reg').classList.toggle('on', t === 'reg');
+  G('f-li').classList.toggle('hidden', t !== 'li');
+  G('f-reg').classList.toggle('hidden', t !== 'reg');
+  G('t-li').classList.toggle('on', t === 'li');
+  G('t-reg').classList.toggle('on', t === 'reg');
   clearAuthMsg();
 }
 
@@ -724,25 +701,30 @@ function cleanUn(inp) {
   inp.value = inp.value.toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 20);
 }
 
-/* ══════════════════════════════════════════
-   AUTH: LOGIN
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   LOGIN
+══════════════════════════════════════ */
 async function doLogin() {
   const em = gv('l-em'), pw = gv('l-pw');
   if (!em || !pw) return showAuthMsg('Please fill all fields.', 'err');
   setL('btn-li', true);
   try {
     await auth.signInWithEmailAndPassword(em, pw);
-    // onAuthStateChanged handles the rest
+    // onAuthStateChanged handles routing
   } catch (e) {
     showAuthMsg(fmtErr(e.code) || e.message, 'err');
     setL('btn-li', false);
   }
 }
 
-/* ══════════════════════════════════════════
-   AUTH: REGISTER  ← fully fixed
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   REGISTER  — fully fixed
+   Fix 1: REGISTERING flag prevents race
+   Fix 2: getIdToken(true) forces fresh
+          auth token before Firestore write
+   Fix 3: sleep(500) lets token propagate
+   Fix 4: finally block always clears flag
+══════════════════════════════════════ */
 async function doReg() {
   clearAuthMsg();
   const nm = gv('r-nm');
@@ -750,19 +732,16 @@ async function doReg() {
   const em = gv('r-em');
   const pw = gv('r-pw');
 
-  // Validate
-  if (!nm || !un || !em || !pw) return showAuthMsg('Please fill all fields.', 'err');
+  if (!nm || !un || !em || !pw)  return showAuthMsg('Please fill all fields.', 'err');
   if (un.length < 3)             return showAuthMsg('Username must be at least 3 characters.', 'err');
-  if (!/^[a-z0-9_]+$/.test(un)) return showAuthMsg('Username: letters, numbers and underscores only.', 'err');
+  if (!/^[a-z0-9_]+$/.test(un)) return showAuthMsg('Username: letters, numbers, underscores only.', 'err');
   if (pw.length < 6)             return showAuthMsg('Password must be at least 6 characters.', 'err');
 
   setL('btn-reg', true);
-
-  // ← FIX: set flag BEFORE any Firebase calls
-  REGISTERING = true;
+  REGISTERING = true;  // block auth listener
 
   try {
-    // 1. Check username uniqueness
+    // 1. Check username is unique
     const ucheck = await db.collection('users').where('username', '==', un).limit(1).get();
     if (!ucheck.empty) {
       showAuthMsg('Username already taken. Please choose another.', 'err');
@@ -776,7 +755,11 @@ async function doReg() {
     const uid     = cred.user.uid;
     const isAdmin = (em === ADMIN_EMAIL);
 
-    // 3. Write Firestore doc BEFORE doing anything else
+    // 3. Force-refresh the auth token so Firestore sees request.auth != null
+    await cred.user.getIdToken(true);
+    await sleep(500);  // small buffer for token propagation
+
+    // 4. Write the Firestore user document
     const initials = nm.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase().slice(0, 2);
     await db.collection('users').doc(uid).set({
       uid,
@@ -799,35 +782,34 @@ async function doReg() {
     });
 
     if (!isAdmin) {
-      // 4. Sign them out (they need admin approval first)
+      // Sign them out — they need admin approval first
       await auth.signOut();
-      // 5. Clear form
       ['r-nm', 'r-un', 'r-em', 'r-pw'].forEach(id => {
-        const inp = el(id);
+        const inp = G(id);
         if (inp) inp.value = '';
       });
       showAuthMsg('✓ Account created! Awaiting admin approval.', 'ok');
       setL('btn-reg', false);
     }
-    // If admin, let onAuthStateChanged handle routing after flag clears
+    // If admin: flag clears in finally, then onAuthStateChanged handles routing
 
   } catch (e) {
     console.error('Registration error:', e);
-    // ← FIX: try to clean up partial auth user if Firestore write failed
-    if (auth.currentUser && !MY_DOC) {
-      try { await auth.currentUser.delete(); } catch (_) {}
-    }
+    // Try to clean up orphaned auth user if Firestore write failed
+    try {
+      const cu = auth.currentUser;
+      if (cu && cu.uid && !MY_DOC) await cu.delete();
+    } catch (_) {}
     showAuthMsg(fmtErr(e.code) || e.message, 'err');
     setL('btn-reg', false);
   } finally {
-    // ← FIX: always clear the flag
-    REGISTERING = false;
+    REGISTERING = false;  // always release — even on error
   }
 }
 
-/* ══════════════════════════════════════════
-   AUTH: LOGOUT
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   LOGOUT
+══════════════════════════════════════ */
 async function doLogout() {
   if (ME) {
     db.collection('users').doc(ME.uid).update({ online: false }).catch(() => {});
@@ -839,9 +821,9 @@ async function doLogout() {
   await auth.signOut();
 }
 
-/* ══════════════════════════════════════════
-   CONVERSATIONS LISTENER
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   CONVERSATIONS
+══════════════════════════════════════ */
 function listenConvos() {
   unsubCon = db.collection('chats')
     .where('participants', 'array-contains', ME.uid)
@@ -856,23 +838,18 @@ function listenConvos() {
         const d = await db.collection('users').doc(uid).get();
         if (d.exists) CONVOS[uid] = { id: uid, ...d.data() };
       }));
-      renderList(el('srch-inp').value || '');
+      renderList(G('srch-inp').value || '');
     });
 }
 
-/* ══════════════════════════════════════════
-   RENDER SIDEBAR LIST
-══════════════════════════════════════════ */
 function renderList(filter) {
-  const list = el('conv-list');
+  const list = G('conv-list');
   let us = Object.values(CONVOS);
   const q = (filter || '').toLowerCase().replace('@', '').trim();
-  if (q) {
-    us = us.filter(u =>
-      (u.username || '').toLowerCase().includes(q) ||
-      (u.name || '').toLowerCase().includes(q)
-    );
-  }
+  if (q) us = us.filter(u =>
+    (u.username || '').toLowerCase().includes(q) ||
+    (u.name || '').toLowerCase().includes(q)
+  );
   if (!us.length) {
     list.innerHTML = `<div class="empty-st"><span class="ei">✉️</span>${
       q ? 'No users found' : IS_ADMIN ? 'Use + to start a chat' : 'No conversations yet'
@@ -885,7 +862,7 @@ function renderList(filter) {
       ? `background-image:url(${esc(u.photoUrl)});background-color:transparent`
       : `background:${esc(u.avatarColor || 'var(--gd)')}`;
     const avT = u.photoUrl ? '' : (u.avatarEmoji || u.initials || '?');
-    return `<div class="ci ${u.id === ACTIVE ? 'active' : ''}" onclick="openChat('${u.id}')" id="ci-${u.id}" role="listitem">
+    return `<div class="ci ${u.id === ACTIVE ? 'active' : ''}" onclick="openChat('${u.id}')" id="ci-${u.id}">
       <div class="ci-av" style="${avS}">${avT}${u.online ? '<div class="dot-on"></div>' : ''}</div>
       <div class="ci-info">
         <div class="ci-name">${esc(u.name || 'User')} ${u.verified ? vbadge() : ''}</div>
@@ -901,13 +878,13 @@ function renderList(filter) {
   us.forEach(u => loadLastMsg(u.id));
 }
 
-/* ══════════════════════════════════════════
-   ADD USER BY USERNAME (admin only)
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   ADD USER (admin)
+══════════════════════════════════════ */
 function toggleAddP() {
-  const p = el('add-panel');
+  const p = G('add-panel');
   p.classList.toggle('hidden');
-  if (!p.classList.contains('hidden')) el('add-inp').focus();
+  if (!p.classList.contains('hidden')) G('add-inp').focus();
 }
 
 async function addByUname() {
@@ -919,62 +896,58 @@ async function addByUname() {
   const uid   = udoc.id;
   const udata = udoc.data();
   if (uid === ME.uid)              { toast("That's you!", 'i'); return; }
-  if (udata.status !== 'approved') { toast('User not approved yet', 'e'); return; }
+  if (udata.status !== 'approved') { toast('User is not approved yet', 'e'); return; }
   const cid = chatId(ME.uid, uid);
   await db.collection('chats').doc(cid).set({
-    participants:    [ME.uid, uid],
-    createdAt:       FS.serverTimestamp(),
-    lastMessage:     '',
-    lastTime:        FS.serverTimestamp(),
+    participants:      [ME.uid, uid],
+    createdAt:         FS.serverTimestamp(),
+    lastMessage:       '',
+    lastTime:          FS.serverTimestamp(),
     [`unread_${ME.uid}`]: 0,
     [`unread_${uid}`]:    0
   }, { merge: true });
   CONVOS[uid] = { id: uid, ...udata };
   renderList('');
-  el('add-inp').value = '';
+  G('add-inp').value = '';
   toggleAddP();
   openChat(uid);
   toast('Chat started with @' + un, 's');
 }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    OPEN CHAT
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 async function openChat(uid) {
   if (unsubMsg) { unsubMsg(); unsubMsg = null; }
   ACTIVE = uid;
 
-  // Always refresh partner doc for latest data
   const pdoc = await db.collection('users').doc(uid).get();
   if (pdoc.exists) CONVOS[uid] = { id: uid, ...pdoc.data() };
   const p = CONVOS[uid] || {};
 
-  el('sidebar').classList.add('mhide');
-
-  setAv(el('ch-av'), p);
-  el('ch-nm').innerHTML = esc(p.name || 'User') + ' ' + (p.verified ? vbadge() : '');
-  el('ch-un').textContent = '@' + (p.username || '');
+  G('sidebar').classList.add('mhide');
+  setAv(G('ch-av'), p);
+  G('ch-nm').innerHTML  = esc(p.name || 'User') + ' ' + (p.verified ? vbadge() : '');
+  G('ch-un').textContent = '@' + (p.username || '');
   updateStatus(uid);
 
-  el('cwelcome').classList.add('hidden');
-  const ac = el('active-chat');
+  G('cwelcome').classList.add('hidden');
+  const ac = G('active-chat');
   ac.classList.remove('hidden');
   ac.style.display = 'flex';
 
   document.querySelectorAll('.ci').forEach(e => e.classList.remove('active'));
-  const ci = el(`ci-${uid}`);
+  const ci = G(`ci-${uid}`);
   if (ci) ci.classList.add('active');
 
   const cid = chatId(ME.uid, uid);
-  db.collection('chats').doc(cid)
-    .set({ [`unread_${ME.uid}`]: 0 }, { merge: true });
+  db.collection('chats').doc(cid).set({ [`unread_${ME.uid}`]: 0 }, { merge: true });
 
   unsubMsg = db.collection('chats').doc(cid)
     .collection('messages')
     .orderBy('time', 'asc')
     .onSnapshot(snap => renderMsgs(snap.docs));
 
-  // Live status updates
   db.collection('users').doc(uid).onSnapshot(d => {
     if (d.exists) { CONVOS[uid] = { id: uid, ...d.data() }; updateStatus(uid); }
   });
@@ -982,34 +955,34 @@ async function openChat(uid) {
 
 function updateStatus(uid) {
   const u  = CONVOS[uid];
-  const st = el('ch-st');
+  const st = G('ch-st');
   if (!u || !st) return;
   if (u.online) {
     st.textContent = '● Online';
-    st.className = 'chdr-st on';
+    st.className   = 'chdr-st on';
   } else {
     st.textContent = u.lastSeen ? 'Last seen ' + ago(u.lastSeen.toDate()) : 'Offline';
-    st.className = 'chdr-st';
+    st.className   = 'chdr-st';
   }
 }
 
-/* ══════════════════════════════════════════
-   RENDER MESSAGES
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   MESSAGES
+══════════════════════════════════════ */
 function renderMsgs(docs) {
-  const area = el('msgs');
+  const area  = G('msgs');
   if (!docs.length) {
     area.innerHTML = '<div style="text-align:center;color:var(--t3);font-size:.8rem;margin-top:32px">Start the conversation ✨</div>';
     return;
   }
-  const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const today = new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
   let html = '', lastD = '';
   docs.forEach(doc => {
     const m    = doc.data();
     const isMe = m.sender === ME.uid;
     const ts   = m.time ? m.time.toDate() : new Date();
-    const ds   = ts.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    const ti   = ts.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    const ds   = ts.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+    const ti   = ts.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
     if (ds !== lastD) {
       html += `<div class="ddiv"><span>${ds === today ? 'Today' : ds}</span></div>`;
       lastD = ds;
@@ -1027,26 +1000,26 @@ function renderMsgs(docs) {
       <div class="mtime" style="${isMe ? 'text-align:right' : 'text-align:left'}">${ti}</div>
     </div>`;
   });
-  area.innerHTML = html;
-  area.scrollTop = area.scrollHeight;
+  area.innerHTML    = html;
+  area.scrollTop    = area.scrollHeight;
 }
 
 async function sendMsg() {
-  const inp  = el('minp');
+  const inp  = G('minp');
   const text = inp.value.trim();
   if (!text || !ACTIVE) return;
-  inp.value = '';
+  inp.value       = '';
   inp.style.height = '';
   const cid = chatId(ME.uid, ACTIVE);
   await db.collection('chats').doc(cid).collection('messages').add({
     text, sender: ME.uid, time: FS.serverTimestamp()
   });
   db.collection('chats').doc(cid).set({
-    participants:     [ME.uid, ACTIVE],
-    lastMessage:      text,
-    lastTime:         FS.serverTimestamp(),
-    [`unread_${ACTIVE}`]:    FS.increment(1),
-    [`unread_${ME.uid}`]:    0
+    participants:        [ME.uid, ACTIVE],
+    lastMessage:         text,
+    lastTime:            FS.serverTimestamp(),
+    [`unread_${ACTIVE}`]:   FS.increment(1),
+    [`unread_${ME.uid}`]:   0
   }, { merge: true });
   loadLastMsg(ACTIVE);
 }
@@ -1055,118 +1028,118 @@ async function loadLastMsg(uid) {
   const snap = await db.collection('chats').doc(chatId(ME.uid, uid)).get();
   if (!snap.exists) return;
   const d  = snap.data();
-  const cl = el(`cl-${uid}`);
-  const ct = el(`ct-${uid}`);
-  const ub = el(`ub-${uid}`);
+  const cl = G(`cl-${uid}`);
+  const ct = G(`ct-${uid}`);
+  const ub = G(`ub-${uid}`);
   if (cl && d.lastMessage) cl.textContent = d.lastMessage.slice(0, 28) + (d.lastMessage.length > 28 ? '…' : '');
   if (ct && d.lastTime)    ct.textContent = ago(d.lastTime.toDate());
   const u = d[`unread_${ME.uid}`] || 0;
   if (ub) { ub.textContent = u; ub.classList.toggle('hidden', u === 0); }
 }
 
-function onKey(e)  { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } }
-function autoH(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
-function backToList() { el('sidebar').classList.remove('mhide'); }
+function onKey(e)    { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } }
+function autoH(inp)  { inp.style.height = 'auto'; inp.style.height = Math.min(inp.scrollHeight, 100) + 'px'; }
+function backToList(){ G('sidebar').classList.remove('mhide'); }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    PROFILE MODAL
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 function openProfile() {
   const d = MY_DOC;
 
-  // Update hero display
-  setAv(el('pav-big'), d);
-  el('pname-disp').innerHTML = esc(d.name || '') + ' ' + (d.verified ? vbadge('lg') : '') + (d.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
-  el('pun-disp').textContent = '@' + (d.username || '');
+  setAv(G('pav-big'), d);
+  G('pname-disp').innerHTML = esc(d.name || '') + ' ' +
+    (d.verified ? vbadge('lg') : '') +
+    (d.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
+  G('pun-disp').textContent = '@' + (d.username || '');
 
-  // ← FIX: always sync bio display correctly
-  const bioDisp = el('pbio-disp');
+  // Bio display
+  const bioEl = G('pbio-disp');
   if (d.bio && d.bio.trim()) {
-    bioDisp.textContent = d.bio;
-    bioDisp.classList.remove('hidden');
+    bioEl.textContent = d.bio;
+    bioEl.classList.remove('hidden');
   } else {
-    bioDisp.textContent = '';
-    bioDisp.classList.add('hidden');
+    bioEl.textContent = '';
+    bioEl.classList.add('hidden');
   }
 
   // Honors
-  const hon = el('phon');
+  const hon = G('phon');
   hon.innerHTML = '';
   if (d.email === ADMIN_EMAIL) hon.innerHTML += bdHonor();
   if (d.verifyStatus === 'pending') {
     hon.innerHTML += '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.25);border-radius:20px;padding:2px 8px;font-size:.69rem;color:#f0a500">⏳ Verify pending</span>';
   }
 
-  // ← FIX: pre-fill edit fields with CURRENT values from MY_DOC
-  el('pe-name').value = d.name  || '';
-  el('pe-bio').value  = d.bio   || '';   // ← this was the bio bug - was sometimes not syncing
+  // Pre-fill edit fields from MY_DOC
+  G('pe-name').value = d.name || '';
+  G('pe-bio').value  = d.bio  || '';  // bio fix: always load fresh from MY_DOC
 
   selEmoji = d.avatarEmoji || null;
   selColor = d.avatarColor || null;
 
-  // Build emoji grid
-  el('av-grid').innerHTML = EMOJIS.map(e =>
+  // Emoji grid
+  G('av-grid').innerHTML = EMOJIS.map(e =>
     `<div class="av-opt ${e === selEmoji ? 'sel' : ''}" onclick="pickEmoji(this,'${e}')">${e}</div>`
   ).join('');
 
-  // Build color row
-  el('col-row').innerHTML = COLORS.map(c =>
+  // Color row
+  G('col-row').innerHTML = COLORS.map(c =>
     `<div class="col-opt ${c === selColor ? 'sel' : ''}" style="background:${c}" onclick="pickColor(this,'${c}')"></div>`
   ).join('');
 
-  el('pe-msg').classList.add('hidden');
-  el('prof-ov').classList.remove('hidden');
+  G('pe-msg').classList.add('hidden');
+  G('prof-ov').classList.remove('hidden');
 }
 
 function pickEmoji(node, e) {
   selEmoji = e;
   document.querySelectorAll('.av-opt').forEach(x => x.classList.remove('sel'));
   node.classList.add('sel');
-  // Live preview
-  const big = el('pav-big');
-  if (!MY_DOC.photoUrl) { big.textContent = e; }
+  if (!MY_DOC.photoUrl) G('pav-big').textContent = e;
 }
 
 function pickColor(node, c) {
   selColor = c;
   document.querySelectorAll('.col-opt').forEach(x => x.classList.remove('sel'));
   node.classList.add('sel');
-  const big = el('pav-big');
-  if (!MY_DOC.photoUrl) { big.style.background = c; }
+  if (!MY_DOC.photoUrl) G('pav-big').style.background = c;
 }
 
 async function promptPhoto() {
   const url = prompt('Paste a direct image URL:\n(Leave blank and press OK to remove photo)');
-  if (url === null) return; // cancelled
+  if (url === null) return;
   const trimmed = url.trim();
   try {
     await db.collection('users').doc(ME.uid).update({ photoUrl: trimmed });
     MY_DOC.photoUrl = trimmed;
-    setAv(el('pav-big'), MY_DOC);
-    setAv(el('nav-av'),  MY_DOC);
+    setAv(G('pav-big'), MY_DOC);
+    setAv(G('nav-av'),  MY_DOC);
     toast('Photo updated!', 's');
   } catch (e) {
     toast('Failed to update photo: ' + e.message, 'e');
   }
 }
 
-/* ══════════════════════════════════════════
-   SAVE PROFILE  ← bio bug fixed here
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   SAVE PROFILE — bio fix applied
+══════════════════════════════════════ */
 async function saveProfile() {
-  const name = el('pe-name').value.trim();
-  const bio  = el('pe-bio').value.trim();  // ← FIX: read directly from element, not gv()
+  const nameEl = G('pe-name');
+  const bioEl  = G('pe-bio');
+  const name   = nameEl.value.trim();
+  const bio    = bioEl.value.trim();  // read directly — not through gv()
 
   if (!name) {
     showMsg('pe-msg', 'Name cannot be empty.', 'err');
     return;
   }
 
-  el('pe-msg').classList.add('hidden');
+  G('pe-msg').classList.add('hidden');
   setL('pe-save', true);
 
   const initials = name.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  const updates = {
+  const updates  = {
     name,
     bio,
     initials,
@@ -1177,18 +1150,20 @@ async function saveProfile() {
   try {
     await db.collection('users').doc(ME.uid).update(updates);
 
-    // ← FIX: update MY_DOC immediately so everything re-renders correctly
+    // Update local state immediately
     Object.assign(MY_DOC, updates);
 
-    // Update nav
+    // Refresh nav bar
     initChatUI();
 
-    // Update profile modal hero
-    setAv(el('pav-big'), MY_DOC);
-    el('pname-disp').innerHTML = esc(name) + ' ' + (MY_DOC.verified ? vbadge('lg') : '') + (MY_DOC.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
+    // Refresh profile modal hero
+    setAv(G('pav-big'), MY_DOC);
+    G('pname-disp').innerHTML = esc(name) + ' ' +
+      (MY_DOC.verified ? vbadge('lg') : '') +
+      (MY_DOC.email === ADMIN_EMAIL ? ' ' + bdHonor() : '');
 
-    // ← FIX: update bio display correctly
-    const bioDisp = el('pbio-disp');
+    // Refresh bio display
+    const bioDisp = G('pbio-disp');
     if (bio) {
       bioDisp.textContent = bio;
       bioDisp.classList.remove('hidden');
@@ -1197,8 +1172,8 @@ async function saveProfile() {
       bioDisp.classList.add('hidden');
     }
 
+    showMsg('pe-msg', '✓ Profile saved!', 'ok');
     toast('Profile saved ✓', 's');
-    showMsg('pe-msg', '✓ Saved!', 'ok');
 
   } catch (e) {
     console.error('Save profile error:', e);
@@ -1208,58 +1183,47 @@ async function saveProfile() {
   setL('pe-save', false);
 }
 
-function closeProf()       { el('prof-ov').classList.add('hidden'); }
-function closeProfIf(e)    { if (e.target.id === 'prof-ov') closeProf(); }
+function closeProf()    { G('prof-ov').classList.add('hidden'); }
+function closeProfIf(e) { if (e.target.id === 'prof-ov') closeProf(); }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    VERIFY MODAL
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 function openVerify() {
   closeProf();
   const vs = MY_DOC.verifyStatus || 'none';
-
-  // Show correct panel
   ['none', 'pending', 'approved', 'rejected'].forEach(s => {
-    el(`vs-${s}`).classList.toggle('hidden', s !== vs);
+    G(`vs-${s}`).classList.toggle('hidden', s !== vs);
   });
-
   if (vs === 'none' || vs === 'rejected') {
     const criteria = [
-      { label: 'Account is approved on Khatir',          met: MY_DOC.status === 'approved' },
-      { label: 'Full name provided (first & last name)',  met: !!(MY_DOC.name && MY_DOC.name.trim().split(' ').length >= 2) },
-      { label: 'Bio is filled out',                       met: !!(MY_DOC.bio && MY_DOC.bio.trim()) },
-      { label: 'Profile photo or custom avatar set',      met: !!(MY_DOC.photoUrl || MY_DOC.avatarEmoji) }
+      { label: 'Account is approved on Khatir',         met: MY_DOC.status === 'approved' },
+      { label: 'Full name (first & last) provided',     met: !!(MY_DOC.name && MY_DOC.name.trim().split(' ').length >= 2) },
+      { label: 'Bio is filled out',                     met: !!(MY_DOC.bio && MY_DOC.bio.trim()) },
+      { label: 'Profile photo or custom avatar set',    met: !!(MY_DOC.photoUrl || MY_DOC.avatarEmoji) }
     ];
-    el('vcrit').innerHTML = criteria.map(c =>
+    G('vcrit').innerHTML = criteria.map(c =>
       `<div class="vc ${c.met ? 'met' : 'unmet'}">${esc(c.label)}</div>`
     ).join('');
-    // Reset form
     if (vs === 'rejected') {
-      el('vfy-reason').value = '';
-      el('vfy-cat').value    = '';
+      G('vfy-reason').value = '';
+      G('vfy-cat').value    = '';
     }
   }
-
-  if (vs === 'approved') {
-    el('vbadge-here').innerHTML = vbadge('lg');
-  }
-
-  el('vfy-msg').classList.add('hidden');
-  el('vfy-ov').classList.remove('hidden');
+  if (vs === 'approved') G('vbadge-here').innerHTML = vbadge('lg');
+  G('vfy-msg').classList.add('hidden');
+  G('vfy-ov').classList.remove('hidden');
 }
 
 async function submitVfy() {
-  const reason = el('vfy-reason').value.trim();
-  const cat    = el('vfy-cat').value;
-  if (!reason)  return showMsg('vfy-msg', 'Please describe why you should be verified.', 'err');
-  if (!cat)     return showMsg('vfy-msg', 'Please select a category.', 'err');
-
+  const reason = G('vfy-reason').value.trim();
+  const cat    = G('vfy-cat').value;
+  if (!reason) return showMsg('vfy-msg', 'Please describe why you should be verified.', 'err');
+  if (!cat)    return showMsg('vfy-msg', 'Please select a category.', 'err');
   setL('btn-vfy', true);
   try {
     await db.collection('users').doc(ME.uid).update({
-      verifyStatus:   'pending',
-      verifyReason:   reason,
-      verifyCategory: cat
+      verifyStatus: 'pending', verifyReason: reason, verifyCategory: cat
     });
     MY_DOC.verifyStatus   = 'pending';
     MY_DOC.verifyReason   = reason;
@@ -1273,7 +1237,7 @@ async function submitVfy() {
 }
 
 async function withdrawVfy() {
-  if (!confirm('Withdraw your Khatir verification application?')) return;
+  if (!confirm('Withdraw your verification application?')) return;
   try {
     await db.collection('users').doc(ME.uid).update({
       verifyStatus: 'none', verifyReason: '', verifyCategory: ''
@@ -1281,31 +1245,29 @@ async function withdrawVfy() {
     MY_DOC.verifyStatus = 'none';
     openVerify();
     toast('Application withdrawn', 'i');
-  } catch (e) {
-    toast('Error: ' + e.message, 'e');
-  }
+  } catch (e) { toast('Error: ' + e.message, 'e'); }
 }
 
 function reapplyVfy() {
-  el('vs-rejected').classList.add('hidden');
-  el('vs-none').classList.remove('hidden');
-  el('vfy-reason').value = '';
-  el('vfy-cat').value    = '';
-  el('vfy-msg').classList.add('hidden');
+  G('vs-rejected').classList.add('hidden');
+  G('vs-none').classList.remove('hidden');
+  G('vfy-reason').value = '';
+  G('vfy-cat').value    = '';
+  G('vfy-msg').classList.add('hidden');
 }
 
-function closeVfy()    { el('vfy-ov').classList.add('hidden'); }
+function closeVfy()    { G('vfy-ov').classList.add('hidden'); }
 function closeVfyIf(e) { if (e.target.id === 'vfy-ov') closeVfy(); }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    ADMIN
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 function swAdminTab(t) {
-  el('atab-u').classList.toggle('on',  t === 'u');
-  el('atab-v').classList.toggle('on',  t === 'v');
-  el('atab-v').classList.toggle('onv', t === 'v');
-  el('atab-u-body').classList.toggle('hidden', t !== 'u');
-  el('atab-v-body').classList.toggle('hidden', t !== 'v');
+  G('atab-u').classList.toggle('on',   t === 'u');
+  G('atab-v').classList.toggle('on',   t === 'v');
+  G('atab-v').classList.toggle('onv',  t === 'v');
+  G('atab-u-body').classList.toggle('hidden', t !== 'u');
+  G('atab-v-body').classList.toggle('hidden', t !== 'v');
 }
 
 function listenAdmin() {
@@ -1314,24 +1276,24 @@ function listenAdmin() {
     snap.docs.forEach(d => {
       const u = { id: d.id, ...d.data() };
       if (u.email === ADMIN_EMAIL) return;
-      if (u.status === 'pending')        p.push(u);
-      else if (u.status === 'approved')  a.push(u);
-      else                               r.push(u);
-      if (u.verifyStatus === 'pending')                      vp.push(u);
-      else if (u.verifyStatus === 'approved' || u.verified)  vd.push(u);
+      if (u.status === 'pending')       p.push(u);
+      else if (u.status === 'approved') a.push(u);
+      else                              r.push(u);
+      if (u.verifyStatus === 'pending')                    vp.push(u);
+      else if (u.verifyStatus === 'approved' || u.verified) vd.push(u);
     });
-    el('acnt-p').textContent = p.length;
-    el('acnt-v').textContent = vp.length;
-    renderAdminCards('pend-list', p, 'pending');
-    renderAdminCards('appr-list', a, 'approved');
-    renderAdminCards('rej-list',  r, 'rejected');
-    renderVfyCards('vreq-list',  vp, 'vreq');
-    renderVfyCards('vdone-list', vd, 'vdone');
+    G('acnt-p').textContent = p.length;
+    G('acnt-v').textContent = vp.length;
+    renderAdminCards('pend-list', p,  'pending');
+    renderAdminCards('appr-list', a,  'approved');
+    renderAdminCards('rej-list',  r,  'rejected');
+    renderVfyCards('vreq-list',   vp, 'vreq');
+    renderVfyCards('vdone-list',  vd, 'vdone');
   });
 }
 
 function renderAdminCards(id, users, type) {
-  const cont = el(id);
+  const cont = G(id);
   if (!users.length) { cont.innerHTML = '<p class="empty-a">None.</p>'; return; }
   cont.innerHTML = users.map(u => {
     const avS = u.photoUrl ? `background-image:url(${esc(u.photoUrl)});background-color:transparent` : `background:${esc(u.avatarColor || 'var(--gd)')}`;
@@ -1357,7 +1319,7 @@ function renderAdminCards(id, users, type) {
 }
 
 function renderVfyCards(id, users, type) {
-  const cont = el(id);
+  const cont = G(id);
   if (!users.length) { cont.innerHTML = '<p class="empty-a">None.</p>'; return; }
   cont.innerHTML = users.map(u => {
     const avS = u.photoUrl ? `background-image:url(${esc(u.photoUrl)});background-color:transparent` : `background:${esc(u.avatarColor || 'var(--gd)')}`;
@@ -1406,100 +1368,97 @@ async function revokeVfy(uid) {
   } catch (e) { toast('Error: ' + e.message, 'e'); }
 }
 
-/* ══════════════════════════════════════════
-   SCREENS
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   SCREENS & LOADER
+══════════════════════════════════════ */
 const SCREENS = ['auth', 'pending', 'chat', 'admin'];
 function showScreen(name) {
   SCREENS.forEach(s => {
-    const node = el(s + '-screen');
+    const node = G(s + '-screen');
     if (node) node.classList.toggle('hidden', s !== name);
   });
 }
 function hideLoader() {
-  const node = el('app-loader');
+  const node = G('app-loader');
   if (!node) return;
   node.style.opacity = '0';
   setTimeout(() => node.remove(), 500);
 }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    TOAST
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 function toast(msg, type = 'i') {
-  const t = document.createElement('div');
+  const t  = document.createElement('div');
   t.className = `toast ${type}`;
   const ic = { s: '✓', e: '✕', i: 'ℹ', b: '🔵' };
   t.innerHTML = `<span>${ic[type] || '•'}</span><span>${msg}</span>`;
-  el('toasts').appendChild(t);
+  G('toasts').appendChild(t);
   setTimeout(() => {
     t.style.animation = 'tout .2s ease forwards';
     setTimeout(() => t.remove(), 220);
   }, 3200);
 }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    BADGE HELPERS
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 function vbadge(sz = '') {
   const s = sz === 'lg' ? '17px' : '13px';
-  const p = sz === 'lg' ? '10px' : '8px';
-  return `<svg width="${s}" height="${s}" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;vertical-align:middle;display:inline-block" aria-label="Verified on Khatir"><title>Verified on Khatir</title><circle cx="7" cy="7" r="7" fill="#3b9eff"/><path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;vertical-align:middle;display:inline-block" title="Verified on Khatir"><circle cx="7" cy="7" r="7" fill="#3b9eff"/><path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 function bdHonor() {
-  return `<span class="bdh" title="Bangladesh — Ahnaf Tahsin"><svg width="18" height="12" viewBox="0 0 18 12" style="border-radius:2px;flex-shrink:0"><rect width="18" height="12" fill="#006a33"/><circle cx="8" cy="6" r="3.2" fill="#f42a41"/></svg>🇧🇩 Bangladesh</span>`;
+  return `<span class="bdh" title="Bangladesh — Ahnaf Tahsin"><svg width="18" height="12" viewBox="0 0 18 12" style="border-radius:2px;flex-shrink:0"><rect width="18" height="12" fill="#006a33"/><circle cx="8" cy="6" r="3.2" fill="#f42a41"/></svg> 🇧🇩 Bangladesh</span>`;
 }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    AVATAR HELPER
-══════════════════════════════════════════ */
+══════════════════════════════════════ */
 function setAv(node, d) {
   if (!node) return;
   if (d && d.photoUrl) {
     node.style.backgroundImage = `url(${esc(d.photoUrl)})`;
-    node.style.background = '';
-    node.textContent = '';
+    node.style.background      = '';
+    node.textContent           = '';
   } else {
     node.style.backgroundImage = 'none';
-    node.style.background = (d && d.avatarColor) || 'var(--gd)';
-    node.textContent = (d && (d.avatarEmoji || d.initials)) || '?';
+    node.style.background      = (d && d.avatarColor) || 'var(--gd)';
+    node.textContent           = (d && (d.avatarEmoji || d.initials)) || '?';
   }
 }
 
-/* ══════════════════════════════════════════
+/* ══════════════════════════════════════
    UTILITIES
-══════════════════════════════════════════ */
-function chatId(a, b) { return [a, b].sort().join('_'); }
-function el(id)       { return document.getElementById(id); }
-function gv(id)       { return (el(id)?.value || '').trim(); }
-function sleep(ms)    { return new Promise(r => setTimeout(r, ms)); }
+══════════════════════════════════════ */
+function chatId(a, b)  { return [a, b].sort().join('_'); }
+function G(id)         { return document.getElementById(id); }
+function gv(id)        { return (G(id)?.value || '').trim(); }
+function sleep(ms)     { return new Promise(r => setTimeout(r, ms)); }
 function esc(s) {
   const d = document.createElement('div');
   d.appendChild(document.createTextNode(String(s || '')));
   return d.innerHTML;
 }
 function showAuthMsg(msg, type) {
-  const node = el('auth-msg');
-  node.textContent = msg;
-  node.className = 'mbox ' + type;
-  node.classList.remove('hidden');
+  const n = G('auth-msg');
+  n.textContent  = msg;
+  n.className    = 'mbox ' + type;
+  n.classList.remove('hidden');
 }
-function clearAuthMsg() {
-  el('auth-msg').classList.add('hidden');
-}
+function clearAuthMsg() { G('auth-msg').classList.add('hidden'); }
 function showMsg(id, msg, type) {
-  const node = el(id);
-  if (!node) return;
-  node.textContent = msg;
-  node.className = 'mbox ' + type;
-  node.classList.remove('hidden');
+  const n = G(id);
+  if (!n) return;
+  n.textContent = msg;
+  n.className   = 'mbox ' + type;
+  n.classList.remove('hidden');
 }
 function setL(id, on) {
-  const b = el(id);
+  const b = G(id);
   if (!b) return;
   b.disabled = on;
-  if (on)  { b.dataset.orig = b.textContent; b.textContent = 'Please wait…'; }
-  else     { b.textContent = b.dataset.orig || b.textContent; }
+  if (on) { b.dataset.orig = b.textContent; b.textContent = 'Please wait…'; }
+  else    { b.textContent  = b.dataset.orig || b.textContent; }
 }
 function ago(d) {
   const s = Math.floor((new Date() - d) / 1000);
@@ -1509,18 +1468,19 @@ function ago(d) {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 function fmtErr(code) {
-  const map = {
-    'auth/user-not-found':        'No account found with that email.',
-    'auth/wrong-password':        'Wrong password.',
-    'auth/email-already-in-use':  'That email is already registered.',
-    'auth/invalid-email':         'Please enter a valid email address.',
-    'auth/weak-password':         'Password is too weak (min 6 characters).',
-    'auth/too-many-requests':     'Too many attempts. Please try again later.',
-    'auth/invalid-credential':    'Invalid email or password.',
-    'auth/network-request-failed':'Network error. Check your internet connection.',
-    'permission-denied':          'Permission denied. Check your Firestore rules.'
-  };
-  return map[code] || null;
+  return ({
+    'auth/user-not-found':          'No account found with that email.',
+    'auth/wrong-password':          'Wrong password.',
+    'auth/invalid-credential':      'Invalid email or password.',
+    'auth/invalid-login-credentials':'Invalid email or password.',
+    'auth/email-already-in-use':    'That email is already registered.',
+    'auth/invalid-email':           'Please enter a valid email address.',
+    'auth/weak-password':           'Password is too weak (min 6 characters).',
+    'auth/too-many-requests':       'Too many attempts. Please try again later.',
+    'auth/network-request-failed':  'Network error. Check your internet connection.',
+    'auth/user-disabled':           'This account has been disabled.',
+    'permission-denied':            'Permission denied. Check your Firestore rules.'
+  })[code] || null;
 }
 </script>
 </body>
